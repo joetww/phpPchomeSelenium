@@ -19,6 +19,15 @@
     }
     }*/
 
+    class OutputTest extends \PHPUnit_Framework_TestCase {
+
+        public function testOutput() {
+            var_dump("HI!");
+            $this->assertTrue(true);
+        }
+
+    }
+
     class WebTest extends \PHPUnit_Extensions_Selenium2TestCase
     {
         /*
@@ -28,14 +37,18 @@
          */
 
         public static $browsers = array(
- /*           array(
+            array(
                 'browserName'    => 'firefox',
                 'host'    => '127.0.0.1',
                 'port'    => 4444
+            ),
+/*            array(
+                'browserName'   => 'internet explorer',
+                'host'          => '192.168.56.103',
+                'port'          => 4444
             ),*/
             array(
-                'ie.enableFullPageScreenshot'   =>  false,
-                'browserName'   => 'internet explorer',
+                'browserName'   => 'chrome',
                 'host'          => '192.168.56.103',
                 'port'          => 4444
             ),
@@ -46,23 +59,47 @@
             )
         );
 
-        public $keywords = array('sony', 'asus', 'apple');
+        public $keywords = array('行軍床');
+
+        public function setUpPage()
+        {
+            $this->currentWindow()->maximize();
+        }
+
         protected function setUp()
         {
             //$this->setHost('10.0.2.15');
             //$this->setport(4444);
             $this->setBrowserUrl('http://www.pchome.com.tw/');
             //$this->setBrowser('chrome');
+            $this->prepareSession()->currentWindow()->size(array(
+                'width' => 1920,
+                'height' => 2160,
+            ));
         }
 
+/*        public function testClass()
+        {
+            $v = new OutputTest;
+            var_dump('Hello World');
+        }
+ */
         public function testTitle2()
         {
+            $this->timeouts()->implicitWait(300);
             //$this->setHost('10.0.2.15');
 //            $this->url('http://www.whatsmybrowser.org/');
             //            sleep(10);
             $this->url('http://24h.pchome.com.tw/');
-//            $this->assertEquals('PChome 24h購物', $this->title());
-            $this->currentWindow()->maximize();
+            //$this->assertEquals('PChome 24h購物', $this->title());
+//            $this->currentWindow()->maximize();
+/*            $this->waitUntil(function(){
+                if($this->byId('keyword')){
+                    return true;
+                }
+                return null;
+            }, 5000
+            );*/
             foreach($this->keywords as $v)
             {
                 $this->byId('keyword')->clear();
