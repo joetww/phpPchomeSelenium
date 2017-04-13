@@ -63,7 +63,11 @@
 
         public function setUpPage()
         {
-            $this->currentWindow()->maximize();
+            //$this->currentWindow()->maximize();
+            $this->currentWindow()->size(array(
+                'width' => 1300,
+                'height' => 2160,
+            ));
         }
 
         protected function setUp()
@@ -72,8 +76,10 @@
             //$this->setport(4444);
             $this->setBrowserUrl('http://www.pchome.com.tw/');
             //$this->setBrowser('chrome');
+            //要抓大圖，
+            //最好用Xvfb另外設定視窗
             $this->prepareSession()->currentWindow()->size(array(
-                'width' => 1920,
+                'width' => 1300,
                 'height' => 2160,
             ));
         }
